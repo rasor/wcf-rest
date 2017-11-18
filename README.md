@@ -18,12 +18,25 @@ In most cases the best thing is to create yet a WCF service using the same contr
 ## The first response
 
 3. Change from SOAP to REST response
-- In RestService1.svc.cs add below [OperationContract]:
+- In RestService1.svc.cs add below `[OperationContract]`:
+```CSharp
 [WebGet(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+```
 - Set a breakpoint in DoWork() and debug project (F5)
-- Open http://localhost:15563/RestService1.svc/DoWork in Chrome
+- Open <http://localhost:15563/RestService1.svc/DoWork> in Chrome
 - => Breakpoint is hit. Response: {"d":null}
-- GET http://localhost:15563/RestService1.svc/DoWork in Postman
+- GET <http://localhost:15563/RestService1.svc/DoWork> in Postman
 - => Response: {"d":null}
+
+## Change response to <empty> for void functions
+
+4. Change from Ajax to REST client
+- In web.config `<behavior>`: Replace `<enableWebScript />` with `<webHttp />`
+- Debug project (F5)
+- GET http://localhost:15563/RestService1.svc/DoWork in Postman
+- => Response: `<empty>`
+
+## Refs 
+- Postman: <https://www.getpostman.com/> or <https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en>
 
 The End

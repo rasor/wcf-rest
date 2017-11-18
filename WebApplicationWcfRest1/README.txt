@@ -1,4 +1,4 @@
-﻿HowTo create a RESTFULL WCF Service
+﻿HowTo create a RESTFULL WCF Service - Visual Studio 2017.4.1
 
 -------- TFS Changeset 1 - The templates ---------------------
 1. Create an empty web:
@@ -16,5 +16,11 @@
 => Breakpoint is hit. Response: {"d":null}
 5. GET http://localhost:15563/RestService1.svc/DoWork in Postman
 => Response: {"d":null}
+
+-------- TFS Changeset 3 - change response to <empty> for void function ---------------------
+6. In web.config <behavior>: Replace <enableWebScript /> with <webHttp />
+7. Debug project (F5)
+- GET http://localhost:15563/RestService1.svc/DoWork in Postman
+=> Response: <empty>
 
 The End
