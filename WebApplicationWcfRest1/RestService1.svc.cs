@@ -1,31 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Text;
+using WebApplicationWcfRest1.interfaces;
+using WebApplicationWcfRest1.models;
 
 namespace WebApplicationWcfRest1
 {
-    [ServiceContract(Namespace = "")]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class RestService1
+    public class RestService1 : IBookService
     {
-        // To use HTTP GET, add [WebGet] attribute. (Default ResponseFormat is WebMessageFormat.Json)
-        // To create an operation that returns XML,
-        //     add [WebGet(ResponseFormat=WebMessageFormat.Xml)],
-        //     and include the following line in the operation body:
-        //         WebOperationContext.Current.OutgoingResponse.ContentType = "text/xml";
-        [OperationContract]
-        [WebGet(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        public void DoWork()
+
+        public void AddBook(Book book)
         {
-            // Add your operation implementation here
-            return;
+            Debug.WriteLine(book.Name);
         }
 
-        // Add more operations here and mark them with [OperationContract]
+        public void DeleteBook(string id)
+        {
+            Debug.WriteLine(id);
+        }
+
+        public Book GetBookById(string id)
+        {
+            return new Book() {Id = 1, Name= "The incredible stamp" };
+        }
+
+        public Book[] GetBooksList()
+        {
+            return new Book[] {new Book() {Id = 1, Name= "The incredible stamp" }};
+        }
+
+        public void UpdateBook(Book book)
+        {
+            Debug.WriteLine(book.Name);
+        }
     }
 }

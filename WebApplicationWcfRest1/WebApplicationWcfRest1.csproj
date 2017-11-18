@@ -92,6 +92,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="interfaces\IBookService.cs" />
+    <Compile Include="models\Book.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestService1.svc.cs">
       <DependentUpon>RestService1.svc</DependentUpon>
