@@ -43,6 +43,10 @@ paths:
       responses:
         200:
           description: OK
+        201:
+          description: "Book created"
+        409:
+          description: "Book exist"
         default:
           description: failed
           schema:
@@ -64,6 +68,10 @@ paths:
       responses:
         200:
           description: OK
+        404:
+          description: "Book not found"
+        405:
+          description: "Validation exception"
         default:
           description: failed
           schema:
@@ -83,6 +91,8 @@ paths:
       tags:
         - IBookService
       responses:
+        404:
+          description: "Book not found"
         200:
           description: OK
           schema:

@@ -118,10 +118,62 @@ In most cases the best thing is to create yet a WCF service using the same contr
 - GET <http://localhost:15563/RestService1.svc/Book/1> in Postman
 - => Response: `{"Id": 1, "Name": "The incredible stamp"}`
 
+## Use HTTP Status Codes 
+
+18. Add HTTP Status Codes to your service
+- In your service `RestService1.svc.cs` - method `AddBook()` add content
+```CSharp
+            WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Created; // 201
+            if (book.Name == "The incredible stamp") {   // Book exist
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Conflict; // 409
+            }
+```
+  - In method `UpdateBook()` add content
+```CSharp
+            if (book.Id == 2) { // Book does not exist - 404
+                WebOperationContext.Current.OutgoingResponse.SetStatusAsNotFound("Resource not found");
+            } else if (book.Name == "") { // Invalid request
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.MethodNotAllowed; // 405
+            }
+```
+  - In method `GetBookById()` add content
+```CSharp
+            if (id == "2") { // Book does not exist - 404
+                WebOperationContext.Current.OutgoingResponse.SetStatusAsNotFound("Resource not found");
+                return null;
+            } else {
+                return new Book() { Id = 1, Name = "The incredible stamp" };
+            }
+```
+- Follow the guidance for HTTP Status Codes in <https://developers.redhat.com/blog/2017/01/19/applying-api-best-practices-in-fuse/>
+- => Test the change using Postman
+19. Update your yaml with the Status Codes
+- In `IBookService.yaml`
+```yaml
+    put:
+      responses:
+        201:
+          description: "Book created"
+        409:
+          description: "Book exist"
+    post:
+      responses:
+        404:
+          description: "Book not found"
+        405:
+          description: "Validation exception"
+    get:
+      responses:
+        404:
+          description: "Book not found"
+```
+
 ## Refs 
 - Postman: <https://www.getpostman.com/> or <https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en>
 - Swagger4WCF: <https://www.codeproject.com/Tips/1190441/How-to-generate-basic-swagger-yaml-description-for>
 - NuGet Swagger4WCF: <https://www.nuget.org/packages/Swagger4WCF>
 - Unity.WCF: <https://www.devtrends.co.uk/blog/introducing-unity.wcf-providing-easy-ioc-integration-for-your-wcf-services>
+- Set StatusCode: <https://codeblitz.wordpress.com/2009/04/27/how-to-host-and-consume-wcf-restful-services/>
+- API Best Practices: <https://developers.redhat.com/blog/2017/01/19/applying-api-best-practices-in-fuse/#>
 
 The End
