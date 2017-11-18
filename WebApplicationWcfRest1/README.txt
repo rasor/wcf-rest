@@ -44,7 +44,26 @@
 - POST http://localhost:15563/RestService1.svc/Book in Postman - Set Body to "raw" and write "{"Id": 2, "Name": "The invincible stamp"}"
 => Notice - you receive the object as a Book in C#
 
+-------- TFS Changeset 5 - Create Swagger Yaml ---------------------
+9. Create Swagger.yaml - this is the wsdl for REST
+- In Project Properties (Alt-Enter) - Build - Select "XML Documentation file" - Clear the path
+- Install https://www.nuget.org/packages/Swagger4WCF into the project containing the interfaces
+- Build project
+=> The yaml file is in \bin\WebApplicationWcfRest1.IBookService.yaml
+10. Edit yaml file
+- Replace host from localhost to localhost:15563 (or to the test- or prod server host)
+- Replace basePath from  /IBookService to /RestService1.svc
+- Replace all paths from e.g. "/GetBooksList:" to /Book: (as you wrote in UriTemplate)
+- Group operations with same path together and delete the duplicate paths
+- Those paths having path parameters e.g. "/{id}" change parameters from "in: query" to "in: path"
+- Save the yaml file into \interfaces\ - update version number each time you send a new version to the client
+11. Test the yaml file
+- Goto http://editor.swagger.io/
+- Replace left pane with the content of the yaml file
+=> In top of right pane: The should be no errors
+
 Ref: 
 - Swagger4WCF: https://www.codeproject.com/Tips/1190441/How-to-generate-basic-swagger-yaml-description-for
+- NuGet: https://www.nuget.org/packages/Swagger4WCF
 
 The End

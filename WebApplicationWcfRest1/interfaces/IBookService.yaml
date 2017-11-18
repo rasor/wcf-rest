@@ -1,0 +1,122 @@
+﻿swagger: '2.0'
+info:
+  title: "IBookService"
+  version: "1.0.0.0"
+host: "localhost:15563"
+schemes:
+  - "http"
+  - "https"
+basePath: "/RestService1.svc"
+paths:
+  /Book:
+    get:
+      summary: GetBooksList
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Book"
+        default:
+          description: failed
+          schema:
+            type: "string"
+    put:
+      summary: AddBook
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: book
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/Book"
+      tags:
+        - IBookService
+      responses:
+        200:
+          description: OK
+        default:
+          description: failed
+          schema:
+            type: "string"
+    post:
+      summary: UpdateBook
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: book
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/Book"
+      tags:
+        - IBookService
+      responses:
+        200:
+          description: OK
+        default:
+          description: failed
+          schema:
+            type: "string"
+  /Book/{id}:
+    get:
+      summary: GetBookById
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: "string"
+      tags:
+        - IBookService
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Book"
+        default:
+          description: failed
+          schema:
+            type: "string"
+    delete:
+      summary: DeleteBook
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: "string"
+      tags:
+        - IBookService
+      responses:
+        200:
+          description: OK
+        default:
+          description: failed
+          schema:
+            type: "string"
+definitions:
+  Book:
+    type: object
+    properties:
+      Id:
+        type: "number"
+        format: int32
+      Name:
+        type: "string"
