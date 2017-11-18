@@ -4,7 +4,7 @@ HowTo create a REST service from a WCF service including Swagger.yaml
 
 ![IBookService.yaml](IBookService.yaml.PNG "IBookService.yaml")
 
-If you have an existing service you create yet an endpoint so you can keep the exising the existing service.
+If you have an existing service you create yet an endpoint so you can keep the existing service.
 
 In most cases the best thing is to create yet a WCF service using the same contract as your original WCF service. Just start from bullet 2 then.
 
@@ -30,7 +30,7 @@ In most cases the best thing is to create yet a WCF service using the same contr
 - GET <http://localhost:15563/RestService1.svc/DoWork> in Postman
 - => Response: {"d":null}
 
-## Change response to <empty> for void functions
+## Change response to `<empty>` for void functions
 
 4. Change from Ajax to REST client
 - In web.config `<behavior>`: Replace `<enableWebScript />` with `<webHttp />`
