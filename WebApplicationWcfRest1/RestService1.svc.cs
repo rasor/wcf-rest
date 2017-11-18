@@ -19,6 +19,7 @@ namespace WebApplicationWcfRest1
         //     and include the following line in the operation body:
         //         WebOperationContext.Current.OutgoingResponse.ContentType = "text/xml";
         [OperationContract]
+        [WebGet(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         public void DoWork()
         {
             // Add your operation implementation here
