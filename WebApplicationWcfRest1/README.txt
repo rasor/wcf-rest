@@ -46,7 +46,7 @@
 
 -------- TFS Changeset 5 - Create Swagger Yaml ---------------------
 9. Create Swagger.yaml - this is the wsdl for REST
-- In Project Properties (Alt-Enter) - Build - Select "XML Documentation file" - Clear the path
+- In Project Properties (Alt-Enter) - Build - Selt "XML Documentation file" - Clear the path
 - Install https://www.nuget.org/packages/Swagger4WCF into the project containing the interfaces
 - Build project
 => The yaml file is in \bin\WebApplicationWcfRest1.IBookService.yaml
@@ -61,6 +61,25 @@
 - Goto http://editor.swagger.io/
 - Replace left pane with the content of the yaml file
 => In top of right pane: The should be no errors
+
+-------- TFS Changeset 6 - Move contracts to new library ---------------------
+12. Swagger4WCF does not work well with Unity.WCF, so we move the contracts to a new library
+- File - New - Project (Ctrl-Shft-N) - Class Library - Name: Contracts
+- Drag'n'drop folder interfaces to Contracts
+- Drag'n'drop folder models to Contracts
+- Add Refs to project Contracts:
+-- System.ServiceModel
+-- System.ServiceModel.Web
+-- System.Runtime.Serialization
+13. Create Swagger.yaml - this is the wsdl for REST
+- In Project Properties (Alt-Enter) - Build - Selt "XML Documentation file" - Clear the path
+- Install https://www.nuget.org/packages/Swagger4WCF into the project containing the interfaces
+- Build project
+=> The yaml file is in \bin\WebApplicationWcfRest1.IBookService.yaml
+14. Remove Swagger4WCF from project WebApplicationWcfRest1
+- In project WebApplicationWcfRest1 add ref to project Contracts
+- In packages.config remove line having Swagger4WCF
+- Rebuild Solution
 
 Ref: 
 - Swagger4WCF: https://www.codeproject.com/Tips/1190441/How-to-generate-basic-swagger-yaml-description-for

@@ -79,6 +79,25 @@ In most cases the best thing is to create yet a WCF service using the same contr
 - Replace left pane with the content of the yaml file (if you use chrome, you can paste)
 - => In top of right pane: The should be no errors
 
+## Move contracts to new library 
+
+12. Swagger4WCF does not work well with Unity.WCF, so we move the contracts to a new library
+- File - New - Project (Ctrl-Shft-N) - Class Library - Name: Contracts
+- Drag'n'drop folder interfaces to Contracts
+- Drag'n'drop folder models to Contracts
+- Add Refs to project Contracts:
+  - `System.ServiceModel`
+  - `System.ServiceModel.Web`
+  - `System.Runtime.Serialization`
+13. Create Swagger.yaml - this is the wsdl for REST
+- In Project Properties (Alt-Enter) - Build - Selt "XML Documentation file" - Clear the path
+- Install <https://www.nuget.org/packages/Swagger4WCF> into the project containing the interfaces (Contracts)
+- Build project
+- => The yaml file is in `\bin\WebApplicationWcfRest1.IBookService.yaml`
+14. Remove `Swagger4WCF` from project `WebApplicationWcfRest1`
+- In project `WebApplicationWcfRest1` add ref to project `Contracts`
+- In `packages.config` remove line having `Swagger4WCF`
+- Rebuild Solution
 
 ## Refs 
 - Postman: <https://www.getpostman.com/> or <https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en>
