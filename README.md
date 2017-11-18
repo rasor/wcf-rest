@@ -99,9 +99,29 @@ In most cases the best thing is to create yet a WCF service using the same contr
 - In `packages.config` remove line having `Swagger4WCF`
 - Rebuild Solution
 
+## Add dependency injection with Unity 
+15. Remove `Swagger4WCF` from service project
+- Unload project `WebApplicationWcfRest1`
+  - Remove two lines containing `Swagger4WCF` near bottom
+16. Add dependency injection
+- Install <https://www.nuget.org/packages/Unity.Wcf> into the project containing the services (`WebApplicationWcfRest1`)
+- => This created file `WcfServiceFactory.cs`
+- View Markup of `RestService1.svc`
+- Replace: `CodeBehind="RestService1.svc.cs"`
+  - with: `Factory="WebApplicationWcfRest1.WcfServiceFactory"`
+- In `WcfServiceFactory.cs` register the service:
+```CSharp
+               .RegisterType<IBookService, RestService1>();
+```
+- Build the solution
+17. Debug project (F5)
+- GET <http://localhost:15563/RestService1.svc/Book/1> in Postman
+- => Response: `{"Id": 1, "Name": "The incredible stamp"}`
+
 ## Refs 
 - Postman: <https://www.getpostman.com/> or <https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en>
 - Swagger4WCF: <https://www.codeproject.com/Tips/1190441/How-to-generate-basic-swagger-yaml-description-for>
 - NuGet Swagger4WCF: <https://www.nuget.org/packages/Swagger4WCF>
+- Unity.WCF: <https://www.devtrends.co.uk/blog/introducing-unity.wcf-providing-easy-ioc-integration-for-your-wcf-services>
 
 The End

@@ -73,7 +73,7 @@
 -- System.Runtime.Serialization
 13. Create Swagger.yaml - this is the wsdl for REST
 - In Project Properties (Alt-Enter) - Build - Selt "XML Documentation file" - Clear the path
-- Install https://www.nuget.org/packages/Swagger4WCF into the project containing the interfaces
+- Install https://www.nuget.org/packages/Swagger4WCF into the project containing the interfaces (Contracts)
 - Build project
 => The yaml file is in \bin\WebApplicationWcfRest1.IBookService.yaml
 14. Remove Swagger4WCF from project WebApplicationWcfRest1
@@ -81,8 +81,26 @@
 - In packages.config remove line having Swagger4WCF
 - Rebuild Solution
 
+-------- TFS Changeset 7 - Add dependency injection with Unity ---------------------
+15. Remove Swagger4WCF from service project
+- Unload project WebApplicationWcfRest1
+-- Remove two lines containing Swagger4WCF near bottom
+16. Add dependency injection
+- Install https://www.nuget.org/packages/Unity.Wcf into the project containing the services (WebApplicationWcfRest1)
+=> This created file WcfServiceFactory.cs
+- View Markup of RestService1.svc
+- Replace: CodeBehind="RestService1.svc.cs"
+-- with: Factory="WebApplicationWcfRest1.WcfServiceFactory"
+- In WcfServiceFactory.cs register the service:
+               .RegisterType<IBookService, RestService1>();
+- Build the solution
+17. Debug project (F5)
+- GET http://localhost:15563/RestService1.svc/Book/1 in Postman
+=> Response: {"Id": 1, "Name": "The incredible stamp"}
+
 Ref: 
 - Swagger4WCF: https://www.codeproject.com/Tips/1190441/How-to-generate-basic-swagger-yaml-description-for
-- NuGet: https://www.nuget.org/packages/Swagger4WCF
+- NuGet Swagger4WCF: https://www.nuget.org/packages/Swagger4WCF
+- Unity.WCF: https://www.devtrends.co.uk/blog/introducing-unity.wcf-providing-easy-ioc-integration-for-your-wcf-services
 
 The End
